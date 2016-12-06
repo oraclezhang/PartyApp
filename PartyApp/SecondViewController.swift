@@ -8,7 +8,10 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class SecondViewController: UIViewController, UITextFieldDelegate {
+    
+    @IBOutlet var txtParty: UITextField!
+    @IBOutlet var txtDesc: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +21,29 @@ class SecondViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //Events
+    @IBAction func btnAddParty_Click(sender: UIButton){
+        partyMgr.addParty(name: txtParty.text!, desc: txtDesc.text!);
+        self.view.endEditing(true)
+        txtParty.text = ""
+        txtDesc.text = ""
+        self.tabBarController?.selectedIndex = 0;
+    }
+    
+    
+    //IOS touch functions
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+        //click the blank to put the keyboard away.
+    }
+    
+    
+    // called when 'return' key pressed. return NO to ignore.
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        textField.resignFirstResponder();
+        return true
     }
 
 
